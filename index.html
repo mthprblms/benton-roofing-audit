@@ -476,6 +476,64 @@
                 gap: 30px;
             }
         }
+
+        /* Fixed Signature */
+        .fixed-signature {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .fixed-signature img {
+            height: 150px;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+            pointer-events: auto;
+            background: rgba(255, 255, 255, .75);
+            border: 100px;
+            padding: 5px;
+        }
+
+        .fixed-signature p {
+            color: #00fa00;
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .fixed-signature a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .fixed-signature a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .fixed-signature {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .fixed-signature img {
+                height: 40px;
+            }
+
+            .fixed-signature p {
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 
@@ -486,12 +544,7 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <nav>
-        <div class="logo-container">
-            <img src="benton Roofing logo.jpg" alt="Benton Roofing" class="logo-img">
-            <span style="color: #333;">|</span>
-            <img src="MyLogo.png" alt="My Logo" class="logo-img">
-        </div>
+    <nav style="justify-content: flex-end;">
         <div class="nav-links">
             <a href="#audit">The Audit</a>
             <a href="#strategy">Strategy</a>
@@ -499,6 +552,12 @@
             <a href="#about">About Me</a>
         </div>
     </nav>
+
+    <div class="fixed-signature">
+        <img src="MyLogo.png" alt="Implied Intellect Logo">
+        <p>Compiled by: Matthew Haney | Implied Intellect | <a href="https://impliedintellect.com"
+                target="_blank">impliedintellect.com</a></p>
+    </div>
 
     <div id="particles-js"></div>
 
