@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benton Roofing Digital Audit & Proposal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #003366; /* Deep Navy - Professional/Trust */
+            --secondary: #c41e3a; /* Roofing Red - Action/Energy */
+            --accent: #f4f4f4;
+            --text: #333;
+            --bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            margin-left: 30px;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0,51,102,0.9), rgba(0,20,40,0.95)), url('https://images.unsplash.com/photo-1632759145351-1d592919f522?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); /* Generic roofing/construction bg */
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Audit Grid */
+        .audit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            border-top: 5px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: #f9f9f9;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        .chart-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-highlight {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .quote-section h2 {
+            color: white;
+            font-size: 2rem;
+            font-style: italic;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .quote-author {
+            margin-top: 20px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        /* About Me */
+        .about-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Contact */
+        .contact-section {
+            text-align: center;
+            background: linear-gradient(135deg, #f4f4f4 0%, #e0e0e0 100%);
+        }
+
+        .contact-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* Micro-animations */
+        .check-list li {
+            list-style: none;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .check-list li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none; /* Simple hide for mobile for this demo */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container">
+            <!-- Logos assumed to be in the same directory -->
+            <img src="benton Roofing logo.jpg" alt="Benton Roofing" class="logo-img">
+            <span style="font-size: 1.5rem; color: #ccc;">|</span>
+            <img src="MyLogo.png" alt="My Logo" class="logo-img">
+        </div>
+        <div class="nav-links">
+            <a href="#audit">The Audit</a>
+            <a href="#data">The Data</a>
+            <a href="#proposal">My Proposal</a>
+            <a href="#about">About Me</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Building Your Digital Legacy</h1>
+            <p>Benton Roofing dominates the skyline. It's time to dominate the search results.</p>
+            <a href="#audit" class="btn">View The Audit</a>
+        </div>
+    </header>
+
+    <section id="audit">
+        <h2 class="section-title" data-aos="fade-up">Digital Presence Audit</h2>
+        <div class="audit-grid">
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <span class="card-icon">🔍</span>
+                <h3>SEO Opportunities</h3>
+                <p><strong>Current Status:</strong> Your brand is strong, but generic terms like "Quality Roofing Services" are missing high-intent traffic.</p>
+                <p><strong>The Fix:</strong> Target specific long-tail keywords like "Emergency Commercial Roof Repair in Flat Rock" to capture immediate needs.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <span class="card-icon">⚡</span>
+                <h3>Speed & Performance</h3>
+                <p><strong>Current Status:</strong> Broken video embeds and unoptimized images are slowing down your site, hurting Google rankings.</p>
+                <p><strong>The Fix:</strong> Implement lazy loading, WebP image formats, and fix broken media to boost Core Web Vitals.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <span class="card-icon">📱</span>
+                <h3>Mobile Experience</h3>
+                <p><strong>Current Status:</strong> With over 60% of searches on mobile, your site needs to be "thumb-friendly".</p>
+                <p><strong>The Fix:</strong> Add "Click-to-Call" buttons and simplified forms to convert mobile visitors instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="data" class="stats-section">
+        <h2 class="section-title" data-aos="fade-up">Why It Matters</h2>
+        <div class="charts-container">
+            <div class="chart-box" data-aos="fade-right">
+                <canvas id="trafficChart"></canvas>
+                <p class="stat-highlight">Organic Search is the #1 Driver of Traffic</p>
+            </div>
+            <div class="chart-box" data-aos="fade-left">
+                <canvas id="mobileChart"></canvas>
+                <p class="stat-highlight">Don't Miss the 61% of Mobile Users</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
+            <h3 style="font-size: 2rem; color: var(--secondary);">94%</h3>
+            <p>of first impressions relate to your site's web design.</p>
+            <small>Source: WebFX</small>
+        </div>
+    </section>
+
+    <section class="quote-section" data-aos="zoom-in">
+        <h2>"Ignoring online marketing is like opening a business but not telling anyone."</h2>
+        <div class="quote-author">— KB Marketing Agency</div>
+    </section>
+
+    <section id="proposal">
+        <h2 class="section-title" data-aos="fade-up">My Proposal</h2>
+        <div class="about-container">
+            <div class="about-text" data-aos="fade-right">
+                <h3>A Comprehensive Digital Overhaul</h3>
+                <p>I don't just build websites; I build revenue engines. Here is what I can do for Benton Roofing:</p>
+                <ul class="check-list">
+                    <li><strong>Sleek, Modern Design:</strong> A visual identity that matches the quality of your physical work.</li>
+                    <li><strong>Technical SEO:</strong> Fixing the "under the hood" issues that keep you from ranking #1.</li>
+                    <li><strong>Content Strategy:</strong> Creating service pages that answer your customers' questions before they ask.</li>
+                    <li><strong>Conversion Optimization:</strong> Turning visitors into leads with strategic calls-to-action.</li>
+                </ul>
+            </div>
+            <div class="about-image" data-aos="fade-left">
+                <!-- Placeholder for a relevant image or graphic -->
+                <div style="background: #eee; height: 300px; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 3rem;">🚀</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" style="background: #f4f4f4;">
+        <h2 class="section-title" data-aos="fade-up">Why Me?</h2>
+        <div class="about-container">
+            <div class="about-image" data-aos="fade-right">
+                <img src="MyLogo.png" alt="My Logo" style="max-width: 200px;">
+            </div>
+            <div class="about-text" data-aos="fade-left">
+                <h3>More Than Just a Developer</h3>
+                <p>I recently moved to Spindale, NC, to care for my father. I'm not a faceless agency in another state; I'm your neighbor. I drive past your billboards on the interstate, and I see the potential for your brand to dominate not just the skyline, but the digital landscape.</p>
+                <p>I bring a unique blend of skills—Web Development, Digital Marketing, Graphic Design, and 3D Art—to the table. I am hungry for work, dedicated to excellence, and ready to prove my value to Benton Roofing.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-box" data-aos="flip-up">
+            <h2>Let's Get to Work</h2>
+            <p>I've already done the audit. I have the plan. Now I just need the green light.</p>
+            <br>
+            <a href="mailto:sudosmh@google.com" class="btn">Email Me: sudosmh@google.com</a>
+            <p style="margin-top: 20px;">Or Call: <strong>828-490-3406</strong></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Proposal for Benton Roofing. Created by Matthew Haney.</p>
+    </footer>
+
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Charts
+        const ctxTraffic = document.getElementById('trafficChart').getContext('2d');
+        const trafficChart = new Chart(ctxTraffic, {
+            type: 'doughnut',
+            data: {
+                labels: ['Organic Search', 'Paid Search', 'Social Media', 'Direct/Other'],
+                datasets: [{
+                    label: 'Traffic Sources',
+                    data: [53, 15, 5, 27],
+                    backgroundColor: [
+                        '#003366', // Navy
+                        '#c41e3a', // Red
+                        '#f4f4f4', // Light
+                        '#333333'  // Dark
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Typical Construction Website Traffic Sources'
+                    }
+                }
+            }
+        });
+
+        const ctxMobile = document.getElementById('mobileChart').getContext('2d');
+        const mobileChart = new Chart(ctxMobile, {
+            type: 'bar',
+            data: {
+                labels: ['Mobile Users', 'Desktop Users'],
+                datasets: [{
+                    label: '% of Users',
+                    data: [61, 39],
+                    backgroundColor: [
+                        '#c41e3a',
+                        '#003366'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Device Usage Trends (2024)'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
